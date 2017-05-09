@@ -1,6 +1,10 @@
 # Mysql Cmd Collections
 
-## Export structure of specifed tables with command mysqldump
+## Preface
+
+## Content
+
+### Export structure of specifed tables with command mysqldump
 
 ```mysql
 mysqldump  --compact --add-drop-table -h HOST_ADDRESS -uUSERNAME -p -d DATABASE_NAME --table \
