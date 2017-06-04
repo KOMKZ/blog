@@ -1,0 +1,123 @@
+#!/usr/bin/env php
+<?php
+class Worker
+{
+    /**
+     * github的根地址
+     * @var string
+     */
+    private $_githubRoot = '';
+    public function setGithubRoot($value){
+        $this->_githubRoot = trim($value, '/') . '/';
+    }
+
+    /**
+     * 忽略的文章列表
+     * @var array
+     */
+    private $_ignorePost = [];
+    public function setIgnorePost(Array $value = []){
+        $this->_ignorePost = array_merge($value, ['README.md']);
+    }
+
+
+    /**
+     * 更新README的内容
+     * 更新内容如下：
+     * 1. 更新文章列表
+     * @return [type] [description]
+     */
+    public function updateReadme(){
+        $postItems = $this->getPostItems();
+        $newListContent = $this->buildPostList($postItems);
+        $pattern = '/(## 文章列表\n)([\w\W]+)(##)/';
+        $readmeContent = file_get_contents($this->getReadmePath());
+        if($newContent = preg_replace($pattern, "$1{$newListContent}$3", $readmeContent)){
+            file_put_contents($this->getReadmePath(), $newContent);
+            echo "已经更新README\n";
+        }else{
+            echo "更新README失败\n";
+        }
+    }
+
+    private function buildPostList($postItems){
+        $content = '';
+        foreach ($postItems as $postItem) {
+            $content .= sprintf("* [%s](%s)\n", $postItem['title'], $postItem['link']);
+        }
+        return $content;
+    }
+
+    private function getPostItems(){
+        $files = $this->getPostFiles();
+        $result = [];
+        foreach($files as $filePath){
+            if($this->isFileDeny($filePath)){
+                continue;
+            }
+            $result[] = [
+                'link' => $this->buildPostLink($filePath),
+                'title' => $this->parsePostTitle($filePath),
+                'path' => $filePath
+            ];
+        }
+        return $result;
+    }
+
+    private function parsePostTitle($filePath){
+        if(preg_match('/#\s+?(.+)/', file_get_contents($filePath), $matches)){
+            return $matches[1];
+        }else{
+            return basename($filePath);
+        }
+    }
+
+    private function buildPostLink($filePath){
+        return $this->_githubRoot . basename($filePath);
+    }
+
+    private function isFileDeny($path){
+        return is_dir($path)
+               ||
+               in_array(basename($path), $this->_ignorePost);
+    }
+
+    private function getRootDir(){
+        return dirname(dirname(__FILE__));
+    }
+
+    private function getReadmePath(){
+        return $this->getRootDir() . '/' . 'README.md';
+    }
+
+    private function getPostFiles(){
+        $root = $this->getRootDir();
+        $files = glob("{$root}/*");
+        return $files;
+    }
+    
+    public function __construct($config = []){
+        foreach($config as $attr => $value){
+            $this->$attr = $value;
+        }
+    }
+
+    public function __set($name, $value)
+    {
+        $setter = 'set' . $name;
+        if (method_exists($this, $setter)) {
+            $this->$setter($value);
+        } elseif (method_exists($this, 'get' . $name)) {
+            throw new \Exception('设置只读属性: ' . get_class($this) . '::' . $name);
+        } else {
+            throw new \Exception('设置不存在的属性: ' . get_class($this) . '::' . $name);
+        }
+    }
+}
+
+$config = [
+    'githubRoot' => 'https://github.com/KOMKZ/blog/blob/master/',
+    'ignorePost' => []
+];
+$w = new Worker($config);
+$w->updateReadme();
