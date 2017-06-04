@@ -194,7 +194,7 @@ $ cd ~/soft/src
 $ git clone https://github.com/rofl0r/proxychains-ng
 $ cd proxychains-ng
 $ ./configure --prefix=/usr --sysconfdir=/etc
-$ sudo make install 
+$ sudo make install
 $ sudo make install-config
 ```
 
@@ -245,6 +245,19 @@ $ composer
 Composer version 1.4.2 2017-05-17 08:17:52
 ```
 
+### 安装typora
+typora是一个清爽的md编辑器，谁用谁爽，安装如下：（网速过慢请自行拿梯子，如proxychains）
+
+```
+$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BA300B7755AFCFAE
+
+$ sudo add-apt-repository 'deb https://typora.io ./linux/'
+$ sudo apt-get update
+
+$ sudo apt-get install typora
+```
+
+
 ## 配置
 
 ### 配置LNMP及测试
@@ -288,7 +301,7 @@ server {
 重启动一下服务：
 
 ```
-$ sudo service php5.6-fpm restart 
+$ sudo service php5.6-fpm restart
 $ sudo nginx -s reload
 ```
 
@@ -311,7 +324,7 @@ create database dull DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 
 ```
 $ vim /etc/nginx/sites-enabled/dull-fe
-$ vim vim /etc/nginx/sites-enabled/dull-be 
+$ vim vim /etc/nginx/sites-enabled/dull-be
 ```
 
 克隆自己的项目到工作目录, （我已经将公钥放在自己项目的github上了）
@@ -321,8 +334,3 @@ $ cd ~/pro/php
 $ git clone git@github.com:KOMKZ/dull.git
 $ cd dull
 ```
-
-
-
-
-
