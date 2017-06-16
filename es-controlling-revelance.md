@@ -52,7 +52,25 @@ queryNorm = 1 / √sumOfSquaredWeights
 
 其中sumOfSquaredWeights就将query中的term的idf权重都加起来。
 
+query coodranation fator:
 
+用于评定让一个拥有更多的term匹配的doc得到更多的权重，本质是进行结果的微调，看以下的例子：
+
+- Document with `fox` → score: 1.5
+- Document with `quick fox` → score: 3.0
+- Document with `quick brown fox` → score: 4.5
+
+使用微调的例子：
+
+- Document with `fox` → score: `1.5 * 1 / 3` = 0.5
+- Document with `quick fox` → score: `3.0 * 2 / 3` = 2.0
+- Document with `quick brown fox` → score: `4.5 * 3 / 3` = 4.5
+
+boosting：
+
+boosting的时期可以是index time，也可以是query time，推荐在query time中。boosting的影响是针对没一个匹配到的term中， 在partical scoring function中可以看到t.getBoost这个函数。
+
+## 使用Query Struct来操作相关度
 
 
 
