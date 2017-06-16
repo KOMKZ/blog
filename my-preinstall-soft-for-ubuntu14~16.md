@@ -28,6 +28,14 @@ php工作项目在下面，请准备好。
 $ ~/pro/php/
 ```
 
+log文件如下：
+
+```
+$ ~/logs
+```
+
+
+
 ## 安装过程
 
 ### 安装Vim
@@ -56,11 +64,22 @@ $ sudo apt-get install nginx
 
 ### 安装mysql
 
-如下：
+14如下：
 
 ```
 $ sudo apt-get install mysql-server-5.6
 ```
+
+16如下：
+
+```
+$ sudo add-apt-repository 'deb http://archive.ubuntu.com/ubuntu trusty universe'
+$ sudo apt-get update
+$ sudo apt install mysql-server-5.6 * see note below if you get an error
+$ sudo apt install mysql-client-5.6
+```
+
+
 
 ### 安装php5.6
 
@@ -83,12 +102,6 @@ $ sudo apt-get install php5.6-fpm
 
 ```
 $ sudo apt-get install php5.6-mbstring
-```
-
-安装bcmath
-
-```
-$ sudo apt-get install php5.6-bcmath
 ```
 
 安装bcmath
@@ -130,7 +143,7 @@ $ sudo apt-get install php5.6-pdo-mysql
 安装xdebug（经常用）
 
 ```
-$ sudo apt-get install php5.6-pdo-xdebug
+$ sudo apt-get install php5.6-xdebug
 ```
 
 安装dom(phpunit需要这个扩展)
@@ -145,6 +158,7 @@ $ sudo apt-get install php5.6-dom
 
 ```
 $ sudo apt-get install python-pip
+$ pip install --upgrade pip
 ```
 
 **安装shadowsocks**
@@ -185,6 +199,12 @@ $ sslocal -c /etc/kzconf/sslocal.conf
 todo
 ```
 
+或者直接后台运行：
+
+```
+sslocal -c /etc/kzconf/sslocal.conf > /dev/null 2>%1 &
+```
+
 **安装proxychains4**
 
 这是一个命令行的代理工具, 编译安装，在clone下来的时候超慢，诸君请耐心等候。
@@ -214,7 +234,7 @@ socks5 127.0.0.1 1080
 测试一下：(注意sslocal已经运行)
 
 ```
-$ ./proxychains4 -f /etc/kzconf/proxychains.conf telnet google.com 80
+$ proxychains4 -f /etc/kzconf/proxychains.conf telnet google.com 80
 ```
 
 使用方式就是：`proxychains4 -f {配置文件} 命令 命令的参数`
@@ -226,7 +246,7 @@ $ ./proxychains4 -f /etc/kzconf/proxychains.conf telnet google.com 80
 ```
 $ cd ~/soft/src
 $ php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-$ ./proxychains4 -f /etc/kzconf/proxychains.conf php composer-setup.php
+$ proxychains4 -f /etc/kzconf/proxychains.conf php composer-setup.php
 ```
 
 等待下载成功，然后执行一下命令，测试是否已经安装成功。
@@ -256,6 +276,92 @@ $ sudo apt-get update
 
 $ sudo apt-get install typora
 ```
+
+### 安装atom
+
+超爱的编辑器：
+
+```
+$ cd ~/soft/src
+$ mkdir atom
+$ cd atom
+$ proxychains4 -f /etc/kzconf/proxychains.conf wget https://atom.io/download/deb
+$ sudo dpkg -i deb
+```
+
+### 安装QQ国际版
+
+安装wine
+
+```
+$ sudo apt-get install wine
+```
+
+wine-qqintl
+
+
+
+
+
+### 安装mysql-workbench
+
+又是一个命令就搞定
+
+```
+$ sudo apt-get install mysql-workbench
+```
+
+
+
+### 安装Chrome
+
+如下：
+
+```
+$ cd ~/soft/src
+$ mkdir chrome
+$ cd chrome
+$ proxychains4 -f /etc/kzconf/proxychains.conf wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+$ sudo dpkg -i google-chrome-stable_current_amd64.deb
+```
+
+### 安装Chrome插件/应用
+
+安装advanced rest client
+
+安装gliffy diagrams
+
+安装
+
+### 安装有道词典
+
+如下：
+
+```
+$ mkdir ~/soft/src/yodao
+$ cd ~/soft/src/yodao
+$ wget http://codown.youdao.com/cidian/linux/youdao-dict_1.1.0-0-deepin_amd64.deb
+$ sudo dpkg -i youdao-dict_1.1.0-0-deepin_amd64.deb
+```
+
+
+
+### 安装gitkraken
+
+这是git的一个Node.js客户端,效果还不错，可以用用
+
+```
+$ cd ~/soft/src
+$ mkdir gitkraken
+$ cd gitkraken
+$ proxychains4 -f /etc/kzconf/proxychains.conf wget https://release.gitkraken.com/linux/gitkraken-amd64.deb
+$ sudo dpkg -i gitkraken-amd64.deb
+```
+
+
+
+
+
 
 
 ## 配置
@@ -313,9 +419,17 @@ $ curl -XGET 'http://localhost/index.php'
 
 ### 配置自己的项目
 
+配置公钥, 然后放在需要放的地方，事实证明很多地方要用到。
+
+```
+$ ssh-kengen
+$ cat ~/.ssh/id_rsa.pub
+```
+
 创建数据库
 
 ```
+$ sudo service mysql start
 $ mysql -uroot -p
 create database dull DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 ```
@@ -327,10 +441,14 @@ $ vim /etc/nginx/sites-enabled/dull-fe
 $ vim vim /etc/nginx/sites-enabled/dull-be
 ```
 
+
+
 克隆自己的项目到工作目录, （我已经将公钥放在自己项目的github上了）
 
 ```
 $ cd ~/pro/php
 $ git clone git@github.com:KOMKZ/dull.git
 $ cd dull
+$ ./yii
+
 ```
