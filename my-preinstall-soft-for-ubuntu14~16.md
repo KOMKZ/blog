@@ -301,6 +301,108 @@ wine-qqintl
 
 
 
+### 安装elasticsearch2.4
+
+参考文档：
+
+```
+// 官方安装说明
+https://www.elastic.co/guide/en/elasticsearch/reference/2.4/_installation.html
+```
+
+依赖java，需要先安装java（注java7不再支持了，安装8），这个下载还是相对久的,请自觉搬梯子。
+
+```
+$ sudo add-apt-repository ppa:webupd8team/java
+$ sudo apt-get update
+$ proxychains4 -f /etc/kzconf/proxychains.conf sudo apt-get install oracle-java8-installer
+```
+
+ 安装一下java的打包工具：
+
+```
+$ sudo apt install maven
+```
+
+首先下载软件：
+
+```
+$ cd ~/soft/src; mkdir es; cd es;
+$ proxychains4 -f /etc/kzconf/proxychains.conf wget  https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.4.3/elasticsearch-2.4.3.tar.gz
+$ tar -xvf elasticsearch-2.4.3.tar.gz
+```
+### 安装elasticsearch2.4插件
+
+#### ik中文分词
+
+[ik中文分词](https://github.com/medcl/elasticsearch-analysis-ik)
+
+首先克隆仓库下来：
+
+```
+$ cd ~/soft/src; mkdir es-p; cd es-p;
+$ git clone https://github.com/medcl/elasticsearch-analysis-ik
+$ cd elasticsearch-analysis-ik
+```
+
+es2.4.3版本对应这个插件的版本是1.10.3
+
+```
+$ git checkout v1.10.3
+$ mvn package
+```
+
+复制jar包到es的插件目录，谢谢：(proxy是proxychains的shell)
+
+```
+$ proxy mvn package
+```
+
+然后复制插件到插件目录中：
+
+```
+$ cd ~/soft/target/elasticsearch-2.4.3/plugins/;mkdir ik;cd ik
+$ unzip ~/soft/src/es-p/elasticsearch-analysis-ik/target/releases/elasticsearch-analysis-ik-1.10.3.zip -d ./
+```
+
+回到es目录，启动服务，没报错就是安装成功
+
+```
+$ cd ~/soft/target/elasticsearch-2.4.3/
+$ ./bin/elasticsearch 
+```
+
+####  ik拼音
+
+[下载](https://github.com/medcl/elasticsearch-analysis-pinyin/tree/v1.8.3)
+
+```
+$ cd ~/soft/src/es-p/
+$ proxy git clone https://github.com/medcl/elasticsearch-analysis-pinyin
+$ cd elasticsearch-analysis-pinyin
+```
+
+checkout到对应的版本号：(proxy是proxychains的shell)
+
+```
+$ git checkout v1.8.3
+$ proxy mvn package
+```
+
+安装到es的插件目录
+
+```
+$ cd ~/soft/target/elasticsearch-2.4.3/plugins;mkdir ik-pinyin;cd ik-pinyin
+$ unzip ~/soft/src/es-p/elasticsearch-analysis-pinyin/target/releases/elasticsearch-analysis-pinyin-1.8.3.zip -d ./
+```
+
+回到es目录，启动服务，没报错就是安装成功
+
+```
+$ cd ~/soft/target/elasticsearch-2.4.3/
+$ ./bin/elasticsearch 
+```
+
 
 
 ### 安装mysql-workbench
@@ -359,6 +461,8 @@ $ sudo dpkg -i gitkraken-amd64.deb
 ```
 
 
+
+### 镜像制作工具
 
 
 
@@ -449,6 +553,13 @@ $ vim vim /etc/nginx/sites-enabled/dull-be
 $ cd ~/pro/php
 $ git clone git@github.com:KOMKZ/dull.git
 $ cd dull
-$ ./yii
+```
+
+使用composer安装依赖：
 
 ```
+// 下面这一步很重要
+$ sudo proxychains4 -f /etc/kzconf/proxychains.conf composer global require "fxp/composer-asset-plugin:^1.2.0"
+$ proxychains4 -f /etc/kzconf/proxychains.conf composer update
+```
+
