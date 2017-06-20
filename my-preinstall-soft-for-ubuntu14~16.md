@@ -289,6 +289,19 @@ $ proxychains4 -f /etc/kzconf/proxychains.conf wget https://atom.io/download/deb
 $ sudo dpkg -i deb
 ```
 
+编辑器插件：
+
+```
+docblockr
+emmet
+linter-php
+minimap
+php-debug
+qolor
+```
+
+
+
 ### 安装QQ国际版
 
 安装wine
@@ -411,6 +424,16 @@ $ ./bin/elasticsearch
 
 ```
 $ sudo apt-get install mysql-workbench
+```
+
+
+
+### 安装服务管理软件
+
+如下：
+
+```
+$ sudo apt-get install sysv-rc-conf
 ```
 
 
