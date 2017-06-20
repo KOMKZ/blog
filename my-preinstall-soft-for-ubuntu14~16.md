@@ -54,6 +54,14 @@ $ sudo apt-get install vim
 $ sudo apt-get install git
 ```
 
+### 安装svn
+
+如下：
+
+```
+$ sudo apt-get install subversion
+```
+
 ### 安装Nginx
 
 如下：
@@ -77,6 +85,16 @@ $ sudo add-apt-repository 'deb http://archive.ubuntu.com/ubuntu trusty universe'
 $ sudo apt-get update
 $ sudo apt install mysql-server-5.6 * see note below if you get an error
 $ sudo apt install mysql-client-5.6
+```
+
+### 安装mongo
+
+如下：
+
+参考地址：
+
+```
+https://docs.mongodb.com/v3.0/tutorial/install-mongodb-on-ubuntu/
 ```
 
 
