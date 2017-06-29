@@ -10,6 +10,7 @@ $ ./bin/worker update-readme
 ## 文章列表
 * [Codeception实践](https://github.com/KOMKZ/blog/blob/master/codeception-practice.md)
 * [分词](https://github.com/KOMKZ/blog/blob/master/es-Identifying-words.md)
+* [es中英文 全文搜索实践](https://github.com/KOMKZ/blog/blob/master/es-cn-search-practice.md)
 * [控制相关度](https://github.com/KOMKZ/blog/blob/master/es-controlling-revelance.md)
 * [Elasticsearch全文搜索](https://github.com/KOMKZ/blog/blob/master/es-full-text-search.md)
 * [Getting Started With Human Languages](https://github.com/KOMKZ/blog/blob/master/es-getting-started-with-languages.md)

@@ -434,7 +434,20 @@ $ cd ~/soft/target/elasticsearch-2.4.3/
 $ ./bin/elasticsearch 
 ```
 
+#### lc拼音
 
+[下载](https://github.com/gitchennan/elasticsearch-analysis-lc-pinyin)
+
+如下：
+
+```
+$ proxy git clone https://github.com/gitchennan/elasticsearch-analysis-lc-pinyin
+$ git checkout v2.4.2.1
+$ cd elasticsearch-analysis-lc-pinyin/target
+$ vim pom.xml
+```
+
+然后修改es的版本
 
 ### 安装mysql-workbench
 
@@ -474,7 +487,9 @@ $ sudo dpkg -i google-chrome-stable_current_amd64.deb
 
 安装gliffy diagrams
 
-安装
+安装switchomega,自动切换规则的网址如下：
+
+https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
 
 ### 安装有道词典
 
@@ -501,9 +516,16 @@ $ proxychains4 -f /etc/kzconf/proxychains.conf wget https://release.gitkraken.co
 $ sudo dpkg -i gitkraken-amd64.deb
 ```
 
-
-
 ### 镜像制作工具
+
+如下：
+
+```
+$ sudo add-apt-repository ppa:sergiomejia666/respin
+$ sudo add-apt-repository ppa:sergiomejia666/xresprobe
+$ sudo apt install xresprobe
+$ sudo apt install respin
+```
 
 
 
