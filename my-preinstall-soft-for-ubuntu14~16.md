@@ -211,6 +211,11 @@ $ sudo vim /etc/kzconf/sslocal.conf
 $ sslocal -c /etc/kzconf/sslocal.conf
 ```
 
+sometimes would come with error, and your can slove that by following this [link](https://blog.lyz810.com/article/2016/09/shadowsocks-with-openssl-greater-than-110/)
+```
+AttributeError: /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1: undefined symbol: EVP_CIPHER_CTX_cleanup
+```
+
 设置开机启动
 
 ```
