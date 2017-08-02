@@ -26,3 +26,13 @@ xdebug.remote_mode=req
 xdebug.remote_autostart=true
 ```
 
+## Ubuntu
+
+快捷键使用
+
+| cmd            | description                              |
+| -------------- | ---------------------------------------- |
+| alt + prt sc   | take a screenshotcut of the current window |
+| shift + prt sc | take a screenshotcut of a selected rectangle on a screen. |
+|                |                                          |
+
