@@ -262,6 +262,44 @@ $ proxychains4 -f /etc/kzconf/proxychains.conf telnet google.com 80
 
 使用方式就是：`proxychains4 -f {配置文件} 命令 命令的参数`
 
+### 安装rabbitmq
+
+参考文章:
+
+```
+https://www.rabbitmq.com/install-debian.html
+```
+
+如下:
+
+```
+sudo apt-get update
+sudo apt-get install erlang
+sudo apt-cache policy
+echo 'deb http://www.rabbitmq.com/debian/ testing main' |
+     sudo tee /etc/apt/sources.list.d/rabbitmq.list
+wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc |
+     sudo apt-key add -
+sudo apt-get update
+sudo apt-get install rabbitmq-server
+```
+
+安装成功后服务就已经启动了.
+
+开启插件:
+
+```
+rabbitmq-plugins enable rabbitmq_management
+```
+
+然后可以通过, 密码和用户都是guest
+
+```
+http://localhost:15672/#/
+```
+
+
+
 ### 安装Composer
 
 如下：(下载时间可能有些久，也可以单独把网址拿出来下载)
