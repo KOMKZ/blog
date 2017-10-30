@@ -170,6 +170,142 @@ $ sudo apt-get install php5.6-xdebug
 $ sudo apt-get install php5.6-dom
 ```
 
+### 小命令唤起所有的窗口
+
+python3支持是必需的,然后安装下面这个
+
+```
+sudo add-apt-repository ppa:vlijm/upfront
+sudo apt-get update
+sudo apt-get install upfront
+```
+
+新建个脚本保存为raise.py
+
+```
+#!/usr/bin/env python3
+import signal
+import gi
+gi.require_version('Gtk', '3.0')
+gi.require_version('AppIndicator3', '0.1')
+from gi.repository import Gtk, AppIndicator3, GObject
+import time
+from threading import Thread
+import os
+import subprocess
+import getpass
+
+currpath = os.path.dirname(os.path.realpath(__file__))
+
+class Indicator():
+    def __init__(self):
+        self.app = 'raise_apps'
+        iconpath = os.path.join(currpath, "raise.png")
+        self.indicator = AppIndicator3.Indicator.new(
+            self.app, iconpath,
+            AppIndicator3.IndicatorCategory.OTHER)
+        self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)       
+        self.indicator.set_menu(self.create_menu())
+        # the thread:
+        self.update = Thread(target=self.check_recent)
+        # daemonize the thread to make the indicator stopable
+        self.update.setDaemon(True)
+        self.update.start()
+
+    def create_menu(self):
+        # creates the (initial) menu
+        self.menu = Gtk.Menu()
+        # separator
+        initial = Gtk.MenuItem("Fetching list...")
+        menu_sep = Gtk.SeparatorMenuItem()
+        self.menu.append(initial)
+        self.menu.append(menu_sep)
+        # item_quit.show() 
+        self.menu.show_all()
+        return self.menu
+
+    def raise_wins(self, *args):
+        index = self.menu.get_children().index(self.menu.get_active())
+        selection = self.menu_items2[index][1]
+        for w in selection:
+            execute(["wmctrl", "-ia", w])
+
+    def set_new(self):
+        # update the list, appearing in the menu
+        for i in self.menu.get_children():
+            self.menu.remove(i)
+        for app in self.menu_items2:
+
+            sub = Gtk.MenuItem(app[0])
+            self.menu.append(sub)
+            sub.connect('activate', self.raise_wins)
+        # separator
+        menu_sep = Gtk.SeparatorMenuItem()
+        self.menu.append(menu_sep)
+        # quit
+        item_quit = Gtk.MenuItem('Quit')
+        item_quit.connect('activate', self.stop)
+        self.menu.append(item_quit)
+        self.menu.show_all()
+
+    def get_apps(self):
+        # calculate screen resolution
+        res_output = get("xrandr").split(); idf = res_output.index("current")
+        res = (int(res_output[idf+1]), int(res_output[idf+3].replace(",", "")))
+        # creating window list on current viewport / id's / application names
+        w_data = [l.split() for l in get(["wmctrl", "-lpG"]).splitlines()]
+        # windows on current viewport
+        relevant = [w for w in w_data if 0 < int(w[3]) < res[0] and 0 < int(w[4]) < res[1]]
+        # pids
+        pids = [l.split() for l in get(["ps", "-u", getpass.getuser()]).splitlines()]
+        matches = [[p[-1], [w[0] for w in relevant if w[2] == p[0]]] for p in pids]
+        return [m for m in matches if m[1]]
+
+    def check_recent(self):
+        self.menu_items1 = []
+        while True:
+            time.sleep(4)
+            self.menu_items2 = self.get_apps()
+            for app in self.menu_items2:
+                app[0] = "gnome-terminal" if "gnome-terminal" in app[0] else app[0]
+            if self.menu_items2 != self.menu_items1:
+                GObject.idle_add(
+                    self.set_new, 
+                    priority=GObject.PRIORITY_DEFAULT
+                    )
+            self.menu_items1 = self.menu_items2
+
+    def stop(self, source):
+        Gtk.main_quit()
+
+def get(command):
+    return subprocess.check_output(command).decode("utf-8")
+
+def execute(command):
+    subprocess.Popen(command)
+
+Indicator()
+GObject.threads_init()
+signal.signal(signal.SIGINT, signal.SIG_DFL)
+Gtk.main()
+```
+
+然后在保存一个文件,作为图标:
+
+```
+https://i.stack.imgur.com/XgzYu.png
+```
+
+运行,可以修改脚本只用于唤起terminal
+
+```
+python3 raise.py
+```
+
+原本:
+
+https://askubuntu.com/questions/446521/how-to-show-raise-all-windows-of-an-application
+
 ### 安装Shadowsocks翻墙等代理软件
 
 **安装pip2**

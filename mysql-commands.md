@@ -4,7 +4,7 @@
 
 ## 命令列表
 
-### 使用mysqldump命令导出指定表
+### 使用mysqldump
 定义如下：
 ```linux
 mysqldump  --compact --add-drop-table -h HOST_ADDRESS -uUSERNAME -p -d DATABASE_NAME --table \
@@ -22,3 +22,12 @@ hh_srefund_application \
 hh_srf_source \
 > service-order-table.sql
 ```
+
+
+
+导出某个数据库及数据:
+
+```
+mysqldump -uroot -pdbpasswd  dbname >db.sql;
+```
+

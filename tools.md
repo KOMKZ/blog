@@ -26,3 +26,23 @@ curl_exec($ch);
 curl_close($ch);
 ```
 
+# 软件设置
+
+## Typora
+
+### 设置标题自动编号
+
+如下:
+
+1. 打开Preferrence
+2. 打开主体目录
+3. 新建文件github.user.css 注意和当前主体匹配
+4. 写入以下内容,见附1
+5. 重启
+
+附1:
+
+```
+http://support.typora.io/Auto-Numbering/
+```
+
