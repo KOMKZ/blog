@@ -73,3 +73,21 @@ $ vim index.js
 - `webpack -w`——监测启动 webpack，实时打包更新文件
 - `webpack -p`——对打包后的文件进行压缩
 
+
+
+
+**vue-cli 初始化项目：**
+
+
+
+**vue+webpack使用scss**
+
+1. 在vue-cli目录下使用下初始化后，
+
+2. 然后安装， 
+
+   ```
+   npm install sass-loader node-sass style-loader --save-dev   
+   ```
+
+   或者参考https://medium.com/@mahesh.ks/using-sass-scss-in-vue-js-2-d472af0facf9
