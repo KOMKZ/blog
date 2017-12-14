@@ -91,3 +91,14 @@ $ vim index.js
    ```
 
    或者参考https://medium.com/@mahesh.ks/using-sass-scss-in-vue-js-2-d472af0facf9
+
+
+
+**vue-good-table 依赖**
+
+```
+npm install --save-dev babel-plugin-transform-runtime
+npm install --save-dev babel-preset-stage-2
+npm install babel-preset-env --save-dev
+```
+
