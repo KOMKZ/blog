@@ -9,6 +9,8 @@ $ ./bin/worker update-readme
 
 ## 文章列表
 * [Codeception实践](https://github.com/KOMKZ/blog/blob/master/codeception-practice.md)
+* [Codeception Api Test](https://github.com/KOMKZ/blog/blob/master/codexception-code-test.md)
+* [commit-require.md](https://github.com/KOMKZ/blog/blob/master/commit-require.md)
 * [分词](https://github.com/KOMKZ/blog/blob/master/es-Identifying-words.md)
 * [es中英文 全文搜索实践](https://github.com/KOMKZ/blog/blob/master/es-cn-search-practice.md)
 * [控制相关度](https://github.com/KOMKZ/blog/blob/master/es-controlling-revelance.md)
@@ -28,6 +30,8 @@ $ ./bin/worker update-readme
 * [Mysql相关命令收集](https://github.com/KOMKZ/blog/blob/master/mysql-commands.md)
 * [php-amqp-client阅读笔记](https://github.com/KOMKZ/blog/blob/master/php-amqp-client-note.md)
 * [Php Api Practice Base On Swagger Tools](https://github.com/KOMKZ/blog/blob/master/php-swagger-practice.md)
+* [pro-test.md](https://github.com/KOMKZ/blog/blob/master/pro-test.md)
 * [工具记录](https://github.com/KOMKZ/blog/blob/master/tools.md)
 * [Yii2 Config Usage Practice](https://github.com/KOMKZ/blog/blob/master/yii2-config-practice.md)
+* [yii2-rate-limiter.md](https://github.com/KOMKZ/blog/blob/master/yii2-rate-limiter.md)
 ## 其他
