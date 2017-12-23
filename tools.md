@@ -46,3 +46,13 @@ curl_close($ch);
 http://support.typora.io/Auto-Numbering/
 ```
 
+### vpn连接
+
+参考这篇链接，http://blog.csdn.net/u012336923/article/details/50237007
+
+### eslint在atom中相关设置
+
+http://blog.wangdagen.com/2016/09/22/use-eslint-in-atom.html
+
+在atom中很容易遇到space->tab的自动的过程，可以开启visable
+
