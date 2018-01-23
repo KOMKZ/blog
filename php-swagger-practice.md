@@ -374,3 +374,104 @@ query-user.php
  */
 ```
 
+## 更加简洁的写法
+
+### 语法说明
+
+想象将`php-swagger`的内容加入到我们php文件中，多么大的一陀shi啊，考虑以下写法是不是非常的清爽呢！
+
+**全局信息：**
+
+```
+/**
+ * @root
+ * - host localhost:8064
+ * - version 1.0.0
+ * - title 安全家接口swagger
+ * - description 安全家接口swagger
+ * - Contact name="Trainor Technical Service (Shenzhen)Ltd.", url="http://www.trainor.cn"
+ * - License name="Trainor Technical Service (Shenzhen)Ltd.", url="http://www.trainor.cn"
+ * - basePath /
+ * - schemes http
+ */
+```
+
+注：
+
+* 只支持上诉的属性
+
+**引用信息**
+
+```
+/**
+ * @def #service_order
+ * - od_id integer,服务订单id
+ * - od_title string,服务订单标题
+ * - od_status integer,服务订单状态，{{enum_des:s_od_status}}
+ */
+```
+
+注：
+
+* 使用以下来申明一个引用
+
+  ```
+   @def #{DEF_NAME} 
+  ```
+
+* 属性的语法是
+
+  ```
+  - {PROP_NAME} [required|optional],{TYPE},{DES}
+  ```
+
+**api信息**
+
+```
+/**
+ * @api get,/service-order/{id},ServiceOrder,获取订单编号获取一个服务订单
+ * - id required,integer,in_path,服务订单编号
+ * - od_belong_uid optional,integer,in_query,服务订单买家huid
+ * - od_earning_uid optional,integer,in_query,服务订单卖家huid
+ * @return #global_res
+ * - data object#service_order,返回服务订单信息
+ */
+```
+
+### 安装
+
+这个语法解析可以使用以下命令
+
+```
+./yii doc/gene-api {module} --update=0
+```
+
+上述命令表示对指定的module生成swagger.json，然后更新到版本库中,`params-local.php`配置如下：
+
+```
+    'enumcmd' => 'kzcmd file/enums-str enums.yaml enums-str.php',
+    'svn_swg_json' => [
+        'service' => "/2.0/模块/服务模块/服务订单0.2/swagger.json",
+    ],
+    'apifiles' => [
+        'service' => [
+            '@hsefr/docs/root.php',
+            '@hsefr/controllers/ServiceOrderController.php',
+            '@hsefr/controllers/ServiceRefundApplicationController.php'
+        ]
+    ]
+```
+
+再贴一下enums.yaml的内容：
+
+```
+-
+    name: 订单支付类型
+    field: od_pay_type
+    items:
+        - wxpay|微信支付
+        - alipay|支付宝支付
+        - balance_pay|余额支付
+        - hsebpay|安全币支付
+```
+
