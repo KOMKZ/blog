@@ -14,6 +14,15 @@
 bash -c 'sleep 0.3 && xdotool type "$(date -u +%Y-%m-%d\ %H:%M:%S)"'
 ```
 
+### GIT
+
+常用命令：
+
+```
+# 列出分支的文件修改文件列表
+git diff branch1 branch2 --stat
+```
+
 ### php
 
 #### curl老是忘记使用方法

@@ -1,5 +1,17 @@
 # Golang 填坑记
 
+## 学习点记录
+
+**struct fields tag**
+
+https://sosedoff.com/2016/07/16/golang-struct-tags.html
+
+**type assetion**
+
+![1525416115497](/home/lartik/img/note_img/1525416115497.png)
+
+
+
 ## Glide不能说之痛 
 
 golang.com/x 上面的package由于墙的问题导致glide死慢，好，我有sslocal + proxychains4 啊，真他妈天真我，glide在proxychains4不能接受socks5返回，亲测只能http的代理返回，行，fuck，解决如下：
