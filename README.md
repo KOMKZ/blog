@@ -9,6 +9,7 @@ $ ./bin/worker update-readme
 
 ## 文章列表
 * [PHP Grace Code Fragment](https://github.com/KOMKZ/blog/blob/master/PHP_Grace_Code Fragment.md)
+* [开始使用](https://github.com/KOMKZ/blog/blob/master/cli-task.md)
 * [Codeception实践](https://github.com/KOMKZ/blog/blob/master/codeception-practice.md)
 * [Codeception Api Test](https://github.com/KOMKZ/blog/blob/master/codexception-code-test.md)
 * [commit-require.md](https://github.com/KOMKZ/blog/blob/master/commit-require.md)
@@ -24,6 +25,7 @@ $ ./bin/worker update-readme
 * [ffmpeg manual](https://github.com/KOMKZ/blog/blob/master/ffmpeg.md)
 * [git项目自动更新设置](https://github.com/KOMKZ/blog/blob/master/git-autopull-practice.md)
 * [Golang 填坑记](https://github.com/KOMKZ/blog/blob/master/golang-tour.md)
+* [google-maching-learning.md](https://github.com/KOMKZ/blog/blob/master/google-maching-learning.md)
 * [头疼的问题记录](https://github.com/KOMKZ/blog/blob/master/headache.md)
 * [InnoDB Locking](https://github.com/KOMKZ/blog/blob/master/innodb-locking.md)
 * [安装加载器 babel-loader 和 Babel 的 API 代码 babel-core](https://github.com/KOMKZ/blog/blob/master/js-new.md)
@@ -37,6 +39,8 @@ $ ./bin/worker update-readme
 * [pro-test.md](https://github.com/KOMKZ/blog/blob/master/pro-test.md)
 * [问题提出记录及方案记录](https://github.com/KOMKZ/blog/blob/master/solution-record.md)
 * [工具记录](https://github.com/KOMKZ/blog/blob/master/tools.md)
+* [yii2-apidoc & phpDoc 实操记录](https://github.com/KOMKZ/blog/blob/master/yii2-apidoc.md)
 * [Yii2 Config Usage Practice](https://github.com/KOMKZ/blog/blob/master/yii2-config-practice.md)
+* [基于Yii2的Query层封装](https://github.com/KOMKZ/blog/blob/master/yii2-query.md)
 * [yii2-rate-limiter.md](https://github.com/KOMKZ/blog/blob/master/yii2-rate-limiter.md)
 ## 其他

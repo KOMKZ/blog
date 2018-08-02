@@ -14,9 +14,7 @@ $ composer global require "fxp/composer-asset-plugin:^1.2.0"
 
 ## php
 
-### 且听风雨时，他乡遇故知
-
-ide中开启xdebug中始终拦截不到的问题，试一试以下德xdebug配置：
+* ide中开启xdebug中始终拦截不到的问题，试一试以下德xdebug配置：
 
 ```
 xdebug.remote_enable=1
@@ -27,6 +25,10 @@ xdebug.remote_handler=dbgp
 xdebug.remote_mode=req
 xdebug.remote_autostart=true
 ```
+
+
+
+* php-excel在导出数据其中必须插入图片的话，需要注意如果图片过大一般来说都会导致内存溢出，解决的方法是对图片生成缩略图。
 
 ### 独坐南山头，玉龙静水中
 
