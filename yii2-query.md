@@ -102,7 +102,7 @@ skill(n.sku_id-n.sku_id)user_skills
 SET foreign_key_checks = 0;
 ```
 
-`user`实体:
+实体定义如下：
 
 ```sql
 drop table if exists `user`;
@@ -111,63 +111,43 @@ create table `user`(
 `u_name` varchar(64) not null comment '用户名称',
 primary key (`u_id`)
 )CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB;
-```
 
-`user_detail` 实体：
-
-```sql
 drop table if exists `user_detail`;
 create table `user_detail`(
 `ud_id` int(10) unsigned not null auto_increment comment '主键',
 `u_id` int(10) unsigned not null comment '用户id',
 `ud_long_intro` text not null comment '用户长介绍',
 primary key (`ud_id`),
-foreign key (`ud_u_id`) references `user` (`u_id`),
-unique key (`ud_u_id`)
+foreign key (`u_id`) references `user` (`u_id`),
+unique key (`u_id`)
 )CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB;
-```
 
-`user_skills` 实体：
-
-```sql
 drop table if exists `user_skills`;
 create table `user_skills`(
 `us_id` int(10) unsigned not null auto_increment comment '主键',
-`us_u_id` int(10) unsigned not null comment '用户id',
-`us_sk_id` int(10) unsigned not null comment '技能id',
+`u_id` int(10) unsigned not null comment '用户id',
+`sk_id` int(10) unsigned not null comment '技能id',
 primary key (`us_id`),
-foreign key (`us_u_id`) references `user` (`u_id`),
-foreign key (`us_sk_id`) references `skill` (`sk_id`)
+foreign key (`u_id`) references `user` (`u_id`),
+foreign key (`sk_id`) references `skill` (`sk_id`)
 )CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB;
-```
 
-`skill`实体：
-
-```sql
 drop table if exists `skill`;
 create table `skill`(
 `sk_id` int(10) unsigned not null auto_increment comment '主键',
 `sk_name` varchar(64) not null comment '技能名称',
 primary key (`sk_id`)
 )CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB;
-```
 
-`skill_tag` 实体
-
-```sql
 drop table if exists `skill_tag`;
 create table `skill_tag`(
 skt_id int(10) unsigned not null auto_increment comment '主键',
-skt_sk_id int(10) unsigned not null comment '实体',
+sk_id int(10) unsigned not null comment '实体',
 skt_name varchar(64) not null comment '标签名称',
 primary key (`skt_id`),
-foreign key (`skt_sk_id`) references `skill` (`sk_id`)
+foreign key (`sk_id`) references `skill` (`sk_id`)
 )CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB;
-```
 
-插入初始化数据如下：
-
-```
 insert into skill values (1, 'php');
 insert into skill values (2, 'golang');
 insert into skill values (3, 'sql');
@@ -184,4 +164,3 @@ insert into skill_tag values (2, 1, 'larvel');
 insert into skill_tag values (3, 2, 'channel');
 insert into skill_tag values (4, 2, 'beego');
 ```
-
