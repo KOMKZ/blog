@@ -1,4 +1,4 @@
-# es中英文 全文搜索实践
+# es权威指南实操系列
 
 ## 预备知识
 
@@ -14,6 +14,17 @@
 2. 了解索引构建的基本流程
 3. 了解查询匹配的基本流程
 4. 了解基本api
+
+### 相关资源
+
+```
+# es权威指南 中文
+https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html
+# es2.4参考手册 
+https://www.elastic.co/guide/en/elasticsearch/reference/2.4/index.html
+```
+
+
 
 ## 磨刀霍霍向猪羊
 
@@ -52,74 +63,26 @@ JobController.php
 main.php
 ```
 
-## 0_1-测试best_fields,most_fields,cross_fileds
+## 0_1 索引建立，查询流程
 
-预期：
-
-```
-best_fields: 搜索的文本在字段中得到最好的匹配，则该条文档的分数越大
-most_fields: 搜索的文本出现在越多的字段中，则该条文档的分数越大，逻辑主要是multi_query,然后使用或逻辑，其中可以指定字段的匹配权重
-cross_fields: 
-```
-
-**测试点：best_fields同most_fields的主要差别**
-
-****使用most_fields查询，1分数高因为文本在大多数字段中都出现，自然比2要好。
-
-```json
-源文档如下
-created_at:    1534239611
-id:            1
-create_uname:  国
-               国
-title:         中
-               中
-content:       人
-               人
-
-created_at:    1534239611
-id:            2
-create_uname:  
-title:         中国人
-               中国人
-content:       
-
-得分如下
-id type           score       h_count   text
-1  most_fields    0.19723237  3         中国人
-2  most_fields    0.09861618  1         中国人
-```
-
-使用best_fields查询，2分数更高是因为title的匹配很好，自然比1要分数高。
+相关api：
 
 ```
-源文档如下
-created_at:    1534239611
-id:            2
-create_uname:  
-title:         中国人
-               中国人
-content:       
-
-created_at:    1534239611
-id:            1
-create_uname:  国
-               国
-title:         中
-               中
-content:       人
-               人
-
-得分如下
-id type           score       h_count   text
-2  best_fields    0.4534806   1         中国人
-1  best_fields    0.12845722  3         中国人
-
+# 分析分词效果可以
+http://localhost:9200/{indexName}/_analyze
 ```
 
 
 
+创建索引及映射：
 
+导入数据：
+
+基本查询：
+
+## 探究中文索引的建立和查询
+
+## 中英搜索的常见要求及构建流程
 
 
 
