@@ -7,10 +7,22 @@
 ### 使用mysqldump
 定义如下：
 ```linux
-mysqldump  --compact --add-drop-table -h HOST_ADDRESS -uUSERNAME -p -d DATABASE_NAME --table \
-TABLE_NAME_1 \
-TABLE_NAME_2 \
-> OUTPUT_FILE_NAME
+mysqldump  --compact --add-drop-table -h192.168.1.45 -uhsehome2 -p -d hsehome2 --table \
+hh_comy_organ_permission \
+hh_hutype_permission \
+hh_permission \
+hh_role_permission \
+rs_admin_group_permission \
+rs_admin_permission \
+truc_permission \
+truc_utype_permission \
+hh_comy_organ_role  \
+hh_comy_organ_role_perm \
+hh_comy_organ_user_role \
+hh_role \
+hh_role_permission \
+hh_role_type \
+> target.sql
 ```
 
 例子如下:
