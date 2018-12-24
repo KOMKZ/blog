@@ -24,7 +24,10 @@ $ ./bin/worker update-readme
 * [Mysql相关命令收集](https://github.com/KOMKZ/blog/blob/master/mysql-commands.md)
 * [Php Api Practice Base On Swagger Tools](https://github.com/KOMKZ/blog/blob/master/php-swagger-practice.md)
 * [问题提出记录及方案记录](https://github.com/KOMKZ/blog/blob/master/solution-record.md)
+* [tf-q.md](https://github.com/KOMKZ/blog/blob/master/tf-q.md)
+* [The Go Programming language](https://github.com/KOMKZ/blog/blob/master/tgpl.md)
 * [工具记录](https://github.com/KOMKZ/blog/blob/master/tools.md)
 * [Yii2 Config Usage Practice](https://github.com/KOMKZ/blog/blob/master/yii2-config-practice.md)
 * [yii2-rate-limiter.md](https://github.com/KOMKZ/blog/blob/master/yii2-rate-limiter.md)
+* [HTTP权威指南](https://github.com/KOMKZ/blog/blob/master/第一章http概述.md)
 ## 其他

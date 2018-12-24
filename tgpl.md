@@ -261,6 +261,43 @@ todo
 
 ### Pointers
 
+* a pointer value is address of variable, not every value has an address, but every variable does.
+
+* var x int, => &x ( address of x) => p = &x ( p point to x, or p contains address of x ) => *p yields the value of variable => *p = 3 is ok
+
+* 聚合类型struct的元素或者array的元素都有一个地址
+
+* the zero value for a pointer of any type is nil, pointers are comparable, two pointers are equal if they point to the same variable or both are nil.
+
+* var a int, &a 是一个地址，但是这个地址可能不是nil，nil的情况是 var a *int 此时地址类型的初始值都是nil
+
+* pointers are key to the flag package
+
+* flag包的一个简单使用：
+
+  ```
+  var s = flag.String("s", " ", "seperator")
+  flag.Parse()
+  fmt.Print(strings.Join(flag.Args()), *s))
+  ```
+
+### the new function
+
+* another way to create a variable is to use the build-in function new, the expression new(T) creates an unnamed variabled of type T, initialized it to the zero value of T, and return its address, that is *T
+* 没有什么区别一般是在变量不怎么需要用到名字的时候可以考虑这个方法，这是一个动态创建类型的方法
+* 注意struct和[0]
+* new 不是关键字，所以可以用于命名，但是会覆盖掉new这个function
+
+### lifetime of variables
+
+* the lifetime of a variable is the interval of time during which it exists as the  program executes.
+* the lifetime of package-level variable is the entire execution of the program.
+* 本地变量的话的生存周期比较动态，比如函数的参数和返回结果在调用结束之后就会被回收,
+* go的垃圾回收是怎么知道一个变量可以被回收了呢?todo
+* because the lifetime of variable is determined only by whether or not it is reachable,
+
+
+
 
 
 
