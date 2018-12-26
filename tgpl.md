@@ -291,10 +291,138 @@ todo
 ### lifetime of variables
 
 * the lifetime of a variable is the interval of time during which it exists as the  program executes.
+
 * the lifetime of package-level variable is the entire execution of the program.
+
 * 本地变量的话的生存周期比较动态，比如函数的参数和返回结果在调用结束之后就会被回收,
+
 * go的垃圾回收是怎么知道一个变量可以被回收了呢?todo
-* because the lifetime of variable is determined only by whether or not it is reachable,
+
+* because the lifetime of variable is determined only by whether or not it is reachable,有的时候如果函数内的变量通过某种方式返回，如指针等，则生存周期加长。
+
+* x escapes from f, x must be heap-allocated because it is still reachable from the varible global after f has returned.
+
+  ```
+  var global *int
+  func f(){
+      var x int
+      x = 1
+      global = &x
+  }
+  ```
+
+* when g returns, the variable *y becomes unreachable and can be recycled. so Its safe for the compiler to allocate *y on stack, even if it used by new.
+
+  ```
+  func g(){
+      y := new(int)
+      *y = 1
+  }
+  ```
+
+* a compiler may choose to allcote local variable on he heap or stack, but result perhaps surprisingly, this choice is not determined by wheather var or new was used to declare the variable.
+
+## Assignments
+
+### tuple assignment 
+
+* x, y = y, x
+* often, functions use these additional result to indicate some kind of error, either by returning an error as in the call to os.Open, or a bool. and there 3 operators that behave this way too.
+  * map key look up  -> v, ok = map[key]
+  *  type assestion -> v, ok = x.(T)
+  * channel receive -> v, ok = <-ch
+
+### assignability
+
+* there are many places ina program where an assigment occus implictly, eg,function call, return statement,a literal expression for a composite type.
+
+  ```
+  medals := []string{"abc", "cde"}
+  // equals to 
+  var medals []string{}
+  medals[0] = "abc"
+  medals[1] = "cde"
+  ```
+
+* more generally, the assigment is legal only if the value is assignable to the type of the variable.
+
+## Type Declarations
+
+* type name underlying-type
+
+* even though both have the same underlying type, float64, they are not the same type, so they can not be compared or combined in arithmetic expression. and T(t) is coversion not a function call.and dont change the value or representation in any way.but make change of meaning explicit.
+
+* for every type T, there is a coversion expression call T(t) to cover value of type to type t. the coversion from one type to another is allowed if both have the same underlying type, or if both have unamed pointer type that point to the same underlying type. so two value of different types can not be compared directly.
+
+* coversion in numeric types , floating-point -> integer would disgard fractional part.
+
+* type's method. new behaviours for values of type
+
+  ```
+  // Celsius is one kind of type
+  func (c Celsius) String() string {return fmt.Sprintf("%g C", c)}
+  ```
+
+## Packages and Fils
+
+### imports
+
+* the language secification doesn't define where these strings come from or what they mean, its up to the tools to interpret them.
+* by convertion, a package name matchs the last segment of its import path.
+
+### package initialization
+
+* package initialization begins by package-level variables in the order in which they are declare, but except that dependencies are resolved first.
+
+  ```
+  var a = b + c // thrid
+  var b = f() // two
+  var c = 1 // first
+  ```
+
+* any file may contains any number of functions whose declartions is just, 注意同个package的文件中可以多个init函数，执行顺序按照定义顺序来，同时init函数不能被调用和引用
+
+* package的初始化按照导入顺序来，如果package中依赖了另一个package，则另一个package则先被初始化掉，根据他们的依赖来决定。所以main执行前，肯定都初始化好了。
+
+## Scope
+
+* the scope of declaration is a region of the program text
+
+* lexical blocks 字面上的块，未必是由brace包含起来的
+
+* universe block 全局块，作用于所有的内容
+
+* a declaration lexical block determains its scope
+
+  * the declarations of build-in types, functions and constatns are in the universe block and can be refer to thoughtout the entire program.
+  * declaration outside the function, that is package-level, can be refered thoughout all files in the package.
+
+* when the compiler encounters a reference to a name, it looks for a declaration, starting with innermost enclosing lexical block and working up to the univese block. maybe occurs undeclare name error.
+
+* most blocks are created by control-flow constructs like if statements and for loops, 主意if和for, switch都会有自己的作用域，比如for一般loop body 和 brace包含起来的两个作用域loop body更加outer，
+
+  ```
+  func main()  {
+  	x := "main" // block 1
+  	for i, x := 0, "for_x!"; i < len(x); i++ { // block2
+  		x := x[i] // block3
+  		if x != '!' {
+  			x := x // block4
+  			fmt.Println(x)
+  		}
+  	}
+  	fmt.Println(x)
+  }
+  if x:= f(); x == 0 {
+      //
+  }else if y:=g(x); x == y { // 这个scope更加深
+      // 
+  }
+  ```
+
+* 同级的block不能相互访问，只能访问outer的
+
+* 注意作用域隐藏outer变量的问题，可能会发生的问题，变量没有正确赋值，变量没有使用的error
 
 
 
