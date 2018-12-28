@@ -424,8 +424,155 @@ todo
 
 * 注意作用域隐藏outer变量的问题，可能会发生的问题，变量没有正确赋值，变量没有使用的error
 
+# Basic Data Type
 
+* go types fall into four categories: basic types, aggregate types, reference types. and interface faces.
 
+## integers
+
+* int8,int16,int32,int64 and uint8, uint16, uint32, uint64
+* the type rune is an synonym for int32 and indicates that a value is a unicode point
+* the type byte is an synonym for uint8, that that a value is a piece of raw data rather than a small numeric quantity.
+* 71页有运算符规则
+* in go, the sign of the remainder is always the same as the sign of the dividend, so -5%3, -5%-3 are both -2, and 5.0/4.0 is 1.25 and 5/4 is 1,because integer division truncates the  result toward zero.
+* overflow, 不够容纳，可能会导致原本是符号位的代码不能够正确的设置
+* but a conversion that narows a big integer into a smaller one, or a conversion integer to floating-point to integer, may change the value or lose precision.
+
+## floating-point numbers
+
+* float32, float64,  math.MaxFloat32
+
+* a float32 provides approximately siz decimal digits of precision. whereas a float64 provides about 15 digits.
+
+* digits may be omitted before the dicimal point (.707) or after it (1.)
+
+* math.IsNaN test whether its a argument is a not-a-number value. and math.NaN return such a value, any comparsion with NaN always yields false.
+
+* if a function that returns a floating-point result but fail, its better to report the failure separately,
+
+  ```golang
+  func compute() (value float32, ok boolean){
+      // ...
+      if failed {
+          return 0, false
+      }
+      return value, true
+  }
+  ```
+
+## complex Numbers
+
+todo
+
+## booleans
+
+* s[0] if index of 0 is not exist would panic.
+* there is not implicit coversion from boolean to numberic like 0 or 1, or vice versa, 所以得自己定义方法，主意我们没有三目运算符
+
+## strings
+
+* the build-in len function return number of bytes (not rune) in a string, and attempting to access a byte outside the range results in panic.
+* the + operator makes a new string by concatenaing two strings
+
+### String Literals
+
+* string value is a sequence of bytes enclosed in double quotes.
+* a raw string literal is written ``, using backquotes instead of double quotes.within a raw sting literal, no esape sequences are processed;
+
+## unicode 
+
+* unicode version 8 defines code points for 120000 characters, and in go , the natural data type to hold a single rune is int32. it has the synonym rune for purpose.
+* unicode优点：simple and uniform， but it uses much more space than ASCII。
+
+## UTF-8
+
+* utf8 is a variable-length encoding of unicode code points as bytes.
+
+* the high-order bits of the first byte of the encoding for a rune indicates how many bytes follow.
+
+  * a high-order 0 indicates 7-bit ASCII,where means 0 byte follows, and each rune takes one 1 byte.
+  * a high-order 110 indicates that the rune takes 3 bytes, 2 bytes follow, and the others bytes begin with 10
+
+* the unicode package provide funtions working with individual runes. and the unicode/utf8 package provides functions for encoding and decoding runes as bytes using utf8.
+
+* there are two forms to make a value of unicode point. \uhhhh for 16-bit value and \Uhhhhhhhh for 32-bit value.一个16进字符需要用4位bit来表示， 
+
+* 中文字符一般用3个字节24位来表示
+
+* 以下表示等同
+
+  ```
+  "世界"
+  "\xe4\xb8\x96\xe7\x95\x8c" // 每个一个字节
+  "\u4e16\u754c" // 16-bit unicode转义表示法
+  "\U00004e16\U0000754c" // 32-bit unicode
+  ```
+
+* a rune whose value is less than 256 may be written with a single hexadecimal escape.such '\x41' for 'A', 
+
+  ,but for higher, a \u or \U escape must be used , \xe4\xb8\x96 is not a legal rune literal.
+
+* strings.Contain
+
+* 始终注意，len(string)返回的是字节数，不是字符数
+
+  ```
+  s := "hello, 世界"
+  fmt.Println(len(s)) // 13
+  fmt.Println(utf8.RuneCountInString(s)) //9
+  ```
+
+* 遍历utf字符有很多方法，下面介绍一种原始的解析方法：
+
+  ```
+  func main()  {
+  	s := "hello, 世界"
+  	for i, max := 0, len(s); i < max;{
+  		r, size := utf8.DecodeRuneInString(s[i:])
+  		fmt.Printf("%s %d %d\n", string(r), r, size)
+  		i += size
+  	}
+  }func main()  {
+  	s := "hello, 世界"
+  	for i, max := 0, len(s); i < max;{
+  		r, size := utf8.DecodeRuneInString(s[i:])
+  		fmt.Printf("%s %d %d\n", string(r), r, size)
+  		i += size
+  	}
+  }
+  // 以下是输出
+  h 104 1
+  e 101 1
+  l 108 1
+  l 108 1
+  o 111 1
+  , 44 1
+    32 1
+  世 19990 3
+  界 30028 3
+  ```
+
+* 上面的方法实际是clumsy，只要使用range就行，但是要主义，这里的i是一个字节的下标位置
+
+  ```
+  	for i, r := range s {
+  		fmt.Printf("%s %d %d\n", string(r), r, i)
+  	}
+  ```
+
+* each time utf8 decoder, wheather explit in a call to utf8.DecodeRuneInString or implict in a range loop, consumes a unexpected bytes, it would generate a special unicode point replacement character, \uffed.
+
+* utf8在传输存储上有优势，但是在程序使用尚，unicode格式有优势，uniform size
+
+* a []rune conversion applied to a utf8-encoded string return a sequence of unicode code points that the string encodes.
+
+  ```
+  s := "世界"
+  r := []rune(s)
+  //inserts a space between each pair of hex digits
+  fmt.Printf("% x\n", s) //  e4 b8 96 e7 95 8c
+  fmt.Printf("%x\n, r)//[4e16 754c]
+  ```
 
 
 
