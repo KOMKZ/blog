@@ -4,7 +4,7 @@
 
 ## 命令列表
 
-### 使用mysqldump
+### 使用mysqldump导出表结构
 定义如下：
 ```linux
 mysqldump  --compact --add-drop-table -h192.168.1.45 -uhsehome2 -p -d hsehome2 --table \
@@ -37,7 +37,7 @@ hh_srf_source \
 
 
 
-导出某个数据库及数据:
+### 使用mysqldump导出数据库
 
 ```
 mysqldump -uroot -pdbpasswd  dbname >db.sql;

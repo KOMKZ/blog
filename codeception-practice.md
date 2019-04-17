@@ -118,4 +118,3 @@ $this->specify("description", function(){
 3. [Codeception\Specify](https://github.com/Codeception/Specify)
 4. [Codeception/Verify](https://github.com/Codeception/Verify)
 
-## 一个例子
